@@ -7,7 +7,7 @@ import "./Ico.sol";
 import { FixedMath } from "./FixedMath.sol";
 
 /** @title Treasury inherits INFL token
- * @notice SPACE follows an ERC20 implementation
+ * @notice INFL follows an ERC20 implementation
  */
 
 contract Treasury is ICO {
@@ -35,11 +35,6 @@ contract Treasury is ICO {
         require(msg.sender == admin, "ADMIN: Not allowed!");
         _;
     }
-
-    //Mapping of tokenId to SpaceDetails
-    // mapping(uint256 => SpaceDetails) public spaceInfo;
-    //Mapping of address to cooldown block (prevent double renting, rent-buy & repeated rent-cancel-rent)
-    // mapping(address => uint256) public cooldownByAddress;
 
     event BuyINFL(address buyer,  uint256 price);
     event SellINFL(address seller, uint256 price);

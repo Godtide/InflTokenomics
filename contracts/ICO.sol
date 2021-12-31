@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-// import from node_modules @openzeppelin/contracts v4.0
+// import from node_modules @openzeppelin/contracts 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "./EthUsd.sol";
+import "./PriceConsumer.sol";
 
 /** 
   *@title Initial Coin Offerring(ICO) contract
