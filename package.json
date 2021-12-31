@@ -14,15 +14,14 @@
         "console": "hardhat console",
         "deploy-fuji": "npx hardhat run scripts/deploy-rarepix.js --network fuji",
         "deploy-main": "npx hardhat run scripts/deploy-rarepix.js --network mainnet"
-
     },
     "devDependencies": {
+        "@chainlink/contracts": "^0.2.2",
         "@eth-optimism/smock": "^1.1.5",
         "@nomiclabs/ethereumjs-vm": "^4.2.2",
         "@nomiclabs/hardhat-ethers": "^2.0.2",
         "@nomiclabs/hardhat-waffle": "^2.0.1",
         "@openzeppelin/contracts": "^4.4.1",
-        "@chainlink/contracts": "^0.2.2",
         "chai": "^4.3.4",
         "dotenv": "^10.0.0",
         "eslint": "^7.10.0",
@@ -42,7 +41,7 @@
             "node": true
         }
     },
-    "name": "protocol",
+    "name": "INFL Economy",
     "description": "solidity file for INFL Tokenomics protocol project",
     "version": "1.0.0",
     "main": "hardhat.config.js",
