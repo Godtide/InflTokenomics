@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-// import "hardhat/console.sol";
+import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol"; // OZ contracts v4
