@@ -6,11 +6,11 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./Ico.sol";
 import { FixedMath } from "./FixedMath.sol";
 
-/** @title Decentramall SPACE token
- * @notice SPACE follows an ERC721 implementation
- * @dev Only one address can hold one SPACE token as the tokenID is a hash of the buyer's address
+/** @title Treasury inherits INFL token
+ * @notice SPACE follows an ERC20 implementation
  */
-contract Decentramall is ICO {
+
+contract Treasury is ICO {
     using FixedMath for int256;
 
     //Max limit of tokens to be minted
@@ -39,7 +39,7 @@ contract Decentramall is ICO {
     //Mapping of tokenId to SpaceDetails
     // mapping(uint256 => SpaceDetails) public spaceInfo;
     //Mapping of address to cooldown block (prevent double renting, rent-buy & repeated rent-cancel-rent)
-    mapping(address => uint256) public cooldownByAddress;
+    // mapping(address => uint256) public cooldownByAddress;
 
     event BuyINFL(address buyer,  uint256 price);
     event SellINFL(address seller, uint256 price);
@@ -49,13 +49,11 @@ contract Decentramall is ICO {
         int256 _currentLimit,
         int256 _maxPrice,
         int256 _steepness
-        // address _dai
     ) public  {
         currentLimit = _currentLimit;
         maxPrice = _maxPrice;
         midpoint = currentLimit/2;
         steepness = _steepness;
-        // dai = _dai;
         admin = msg.sender;
     }
 
@@ -82,7 +80,7 @@ contract Decentramall is ICO {
     /**
      * @dev Buy INFL 
      * @notice
-     *@todo ensure that the pricing is done in dollar to Eth equivalent
+     * @ todo ensure that the pricing is done in dollar to Eth equivalent
      */
     function buy( uint256 _amountToPurchase) public payable override {
         require(cooldownByAddress[msg.sender] < block.number, "BUY: Can't buy if renter!");

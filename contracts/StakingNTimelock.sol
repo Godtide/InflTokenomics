@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol"; // OZ contracts v4
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"; // OZ contracts v4
 
-contract PolsStake is AccessControl, ReentrancyGuard {
+contract INFLStake is AccessControl, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     // bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
