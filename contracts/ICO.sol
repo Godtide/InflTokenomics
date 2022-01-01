@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.0;
 
 // import from node_modules @openzeppelin/contracts 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -11,6 +11,11 @@ import "./PriceConsumer.sol";
   *@title Initial Coin Offerring(ICO) contract
 */
 contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
+
+
+    event Buy(address buyer,  uint256 price);
+    event Sell(address seller, uint256 price);
+    // event ChangeAdmin(address newAdmin);
 
     constructor() ERC20("InfluencerEconomy", "INFL") {
       mint(msg.sender,  200000000 *(10**uint256(decimals())));
@@ -41,13 +46,17 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
     /** 
       * @dev function to buy token with ether
     */
-    function buy(uint256 _amountToPurchase) public payable nonReentrant returns (bool sucess) {
+    function buy(uint256 _amountToPurchase) public payable virtual nonReentrant 
+    // returns (bool sucess) 
+    {
         // real pricePerToken = 5/ 10 ** 2
        uint256 pricePerToken = computeInitialPriceInEth(5);
        uint256 amount = pricePerToken * _amountToPurchase;
       require(msg.sender.balance >= amount && amount != 0 ether, "ICO: function buy invalid input");
       _transfer(owner(), _msgSender(), amount);
-      return true;
+
+      emit Buy(msg.sender,  _amountToPurchase);
+      // return true;
     }
 
     /** 

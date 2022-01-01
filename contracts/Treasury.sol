@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./Ico.sol";
+import "./ICO.sol";
 import { FixedMath } from "./FixedMath.sol";
 
 /** @title Treasury inherits INFL token
@@ -77,7 +77,6 @@ contract Treasury is ICO {
      * @ todo ensure that the pricing is done in dollar to Eth equivalent
      */
     function buy( uint256 _amountToPurchase) public payable override {
-        require(cooldownByAddress[msg.sender] < block.number, "BUY: Can't buy if renter!");
         uint256 currentSupply = totalSupply();
         uint256 estimatedPrice = price(currentSupply + 1);
 

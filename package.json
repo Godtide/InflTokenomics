@@ -12,8 +12,8 @@
         "flatten": "npx sol-merger \"./src/**/*.sol\" ./build",
         "test": "mocha",
         "console": "hardhat console",
-        "deploy-fuji": "npx hardhat run scripts/deploy-rarepix.js --network fuji",
-        "deploy-main": "npx hardhat run scripts/deploy-rarepix.js --network mainnet"
+        "deploy-fuji": "npx hardhat run scripts/deploy-treasury.js --network fuji",
+        "deploy-main": "npx hardhat run scripts/deploy-treasury.js --network mainnet"
     },
     "devDependencies": {
         "@chainlink/contracts": "^0.2.2",
