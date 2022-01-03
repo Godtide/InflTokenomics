@@ -52,7 +52,7 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
     // returns (bool sucess) 
     {
         // real pricePerToken = 5/ 10 ** 2
-       uint256 pricePerToken = uint256(computeInitialPriceInEth(5));
+       uint256 pricePerToken = uint256(computeInitialPriceInAvax(5));
        uint256 amount = pricePerToken * _amountToPurchase;
       require(msg.sender.balance >= amount && amount != 0 ether, "ICO: function buy invalid input");
       _transfer(owner(), _msgSender(), amount);
@@ -74,9 +74,8 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
 
 
 
-    function computeInitialPriceInEth(int _usdAmount) public view returns (int priceInWei) {
-
-      return  (_usdAmount * 10**18 / (getLatestPrice() / oracleMultipler) / 10 ** 2) ;
+    function computeInitialPriceInAvax(int _usdAmount) public view returns (int priceInNAvax) {
+      return  (_usdAmount * 10**9 / (getLatestPrice() / oracleMultipler) / 10 ** 2) ;
      }
 
 }

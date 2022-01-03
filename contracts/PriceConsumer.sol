@@ -8,11 +8,11 @@ contract PriceConsumerV3 {
 
     /**
      * Network: FUJI testnet
-     * Aggregator: ETH/USD
-     * Address: 0x86d67c3D38D2bCeE722E601025C25a575021c6EA
+     * Aggregator: Avax/USD
+     * Address: 0x5498BB86BC934c8D34FDA08E81D444153d0D06aD
      */
     constructor() {
-        priceFeed = AggregatorV3Interface(0x86d67c3D38D2bCeE722E601025C25a575021c6EA);
+        priceFeed = AggregatorV3Interface(0x5498BB86BC934c8D34FDA08E81D444153d0D06aD);
     }
 
     /**
@@ -28,6 +28,4 @@ contract PriceConsumerV3 {
         ) = priceFeed.latestRoundData();
         return price;
     }
-
-
 }
