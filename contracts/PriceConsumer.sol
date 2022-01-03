@@ -4,11 +4,10 @@ pragma solidity ^0.8.0;
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract PriceConsumerV3 {
-
     AggregatorV3Interface internal priceFeed;
 
     /**
-     * Network: Avax testnet
+     * Network: FUJI testnet
      * Aggregator: ETH/USD
      * Address: 0x86d67c3D38D2bCeE722E601025C25a575021c6EA
      */
@@ -29,4 +28,6 @@ contract PriceConsumerV3 {
         ) = priceFeed.latestRoundData();
         return price;
     }
+
+
 }

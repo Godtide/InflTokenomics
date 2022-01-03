@@ -12,6 +12,8 @@ import "./PriceConsumer.sol";
 */
 contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
 
+  int oracleMultipler = 10**8;
+
 
     event Buy(address buyer,  uint256 price);
     event Sell(address seller, uint256 price);
@@ -50,12 +52,13 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
     // returns (bool sucess) 
     {
         // real pricePerToken = 5/ 10 ** 2
-       uint256 pricePerToken = computeInitialPriceInEth(5);
+       uint256 pricePerToken = uint256(computeInitialPriceInEth(5));
        uint256 amount = pricePerToken * _amountToPurchase;
       require(msg.sender.balance >= amount && amount != 0 ether, "ICO: function buy invalid input");
       _transfer(owner(), _msgSender(), amount);
 
       emit Buy(msg.sender,  _amountToPurchase);
+
       // return true;
     }
 
@@ -71,7 +74,9 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
 
 
 
-    function computeInitialPriceInEth(uint256 _usdAmount) public view returns (uint priceInEth) {
-     return  _usdAmount/uint256(this.getLatestPrice())/ (10 ** 2) * 10**uint256(decimals());
-    }
+    function computeInitialPriceInEth(int _usdAmount) public view returns (int priceInWei) {
+
+      return  (_usdAmount * 10**18 / (getLatestPrice() / oracleMultipler) / 10 ** 2) ;
+     }
+
 }

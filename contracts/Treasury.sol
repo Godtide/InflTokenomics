@@ -24,9 +24,6 @@ contract Treasury is ICO {
 
 
 
-    // DAI contract address
-    address public dai;
-
     // admin address
     address public admin;
 

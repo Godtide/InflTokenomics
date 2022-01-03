@@ -36,8 +36,8 @@
       ]
     },
     "/Users/tide/Desktop/github/SymrnaCapital/InflTokenomics/contracts/Treasury.sol": {
-      "lastModificationDate": 1641041704935,
-      "contentHash": "4db2eadbb7143f6d076af3db9baed692",
+      "lastModificationDate": 1641211512510,
+      "contentHash": "39047190c92b776a4dec00c2bfcf90f3",
       "sourceName": "contracts/Treasury.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -108,8 +108,8 @@
       ]
     },
     "/Users/tide/Desktop/github/SymrnaCapital/InflTokenomics/contracts/ICO.sol": {
-      "lastModificationDate": 1641041545127,
-      "contentHash": "328b97a9ef969ccfab8d5dc3e9655c31",
+      "lastModificationDate": 1641212019589,
+      "contentHash": "3cd7f520ff93c8e2503594fbfb5f8b0f",
       "sourceName": "contracts/ICO.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -255,8 +255,8 @@
       ]
     },
     "/Users/tide/Desktop/github/SymrnaCapital/InflTokenomics/contracts/PriceConsumer.sol": {
-      "lastModificationDate": 1640951240233,
-      "contentHash": "0e89b8ef265f19fe05e01f22e59499a6",
+      "lastModificationDate": 1641211690245,
+      "contentHash": "b290959a0b247177745127040fd66c0e",
       "sourceName": "contracts/PriceConsumer.sol",
       "solcConfig": {
         "version": "0.8.0",
