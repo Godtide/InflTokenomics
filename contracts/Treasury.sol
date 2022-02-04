@@ -93,9 +93,12 @@ contract Treasury is ICO {
 
         // burn salestax of 2.5% of token bought
         ICO.burn(address(this), toBurn);
+
+     // approve 
+        _approve(msg.sender), receivable);
   
     //  Send INFLtokens to buyer
-       _transfer(owner(), msg.sender, receivable);
+       _transferFrom(owner(), msg.sender, receivable);
         
 
         emit BuyINFL(msg.sender, estimatedPrice);
@@ -115,6 +118,7 @@ contract Treasury is ICO {
         uint256 toBurn = _amountToSell / 10 ;
         uint256 spread = _amountToSell / 10 ;
         uint256 receivable = _amountToSell - toBurn - spread;
+        
         // transfer sold tokens to owner
          _transfer(msg.sender, owner(), receivable);
         // burn 10% to treasury
