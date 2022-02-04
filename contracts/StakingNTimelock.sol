@@ -299,7 +299,10 @@ contract INFLStake is AccessControl, ReentrancyGuard {
      */
     function _stake(uint256 _amount) internal returns (uint256) {
         require(_amount > 0, "stake amount must be > 0");
-
+       
+        
+        require(IERC20(stakingToken).balanceOf(msg.sender) > _amount, " you do not possess enough tokens to stake");
+       
         User storage user = _updateRewards(msg.sender); // update rewards and return reference to user
 
         user.stakeAmount = toUint160(user.stakeAmount + _amount);

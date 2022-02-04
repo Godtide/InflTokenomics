@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./ICO.sol";
 import { FixedMath } from "./FixedMath.sol";
+// import "./PriceConsumer.sol";
 
 /** @title Treasury inherits INFL token
  * @notice INFL follows an ERC20 implementation
@@ -24,17 +25,17 @@ contract Treasury is ICO {
 
 
 
-    // admin address
-    address public admin;
+    // // admin address
+    // address public admin;
 
-    modifier isAdmin{
-        require(msg.sender == admin, "ADMIN: Not allowed!");
-        _;
-    }
+    // modifier isAdmin{
+    //     require(msg.sender == admin, "ADMIN: Not allowed!");
+    //     _;
+    // }
 
     event BuyINFL(address buyer,  uint256 price);
     event SellINFL(address seller, uint256 price);
-    event ChangeAdmin(address newAdmin);
+    // event ChangeAdmin(address newAdmin);
 
     constructor(
         int256 _currentLimit,
@@ -45,7 +46,6 @@ contract Treasury is ICO {
         maxPrice = _maxPrice;
         midpoint = currentLimit/2;
         steepness = _steepness;
-        admin = msg.sender;
     }
 
     /**
@@ -71,36 +71,31 @@ contract Treasury is ICO {
     /**
      * @dev Buy INFL 
      * @notice
-     * @ todo ensure that the pricing is done in dollar to Eth equivalent
+     * @pricing done in avax
      */
     function buy( uint256 _amountToPurchase) public payable override {
         uint256 currentSupply = totalSupply();
         uint256 estimatedPrice = price(currentSupply + 1);
 
-        require(currentSupply < uint256(currentLimit), "BUY: Max Supply Reached!");
-
-         uint256 buyable =  _amountToPurchase * estimatedPrice;
+        require(currentSupply < uint256(currentLimit), "BUY: Max Supply not Reached!");
+        uint256 payableinAvax = uint256(computeInitialPriceInAvax(int256(estimatedPrice)));
+         uint256 buyable =  _amountToPurchase * payableinAvax;
          uint256 toBurn = (_amountToPurchase * 250) / 1000;
          uint256 receivable = _amountToPurchase - toBurn;
         //  uint256 buyTax = (buyable * 250 ) / 100; 
         //  uint256 toPay = buyable + buyTax;
 
-         require(msg.sender.balance > buyable, "not sufficient Eth balance for amount requested");
+         require(msg.value > buyable, "not sufficient Avax balance for amount requested");
 
-     // sends ether value to contract address
-         (bool sent, )= address(this).call{value: buyable}("");
-        require(sent, "Failed to send Ether");
+     // sends ether value to admin address
+         (bool sent, ) = owner().call{value: buyable}("");
+        require(sent, "Failed to send Avax");
 
         // burn salestax of 2.5% of token bought
-        ICO.burn(address(this), toBurn);
-
-     // approve 
-        _approve(msg.sender), receivable);
+        burn(owner(), toBurn);
   
     //  Send INFLtokens to buyer
-       _transferFrom(owner(), msg.sender, receivable);
-        
-
+       transferFrom(owner(), msg.sender, receivable);
         emit BuyINFL(msg.sender, estimatedPrice);
     }
 
@@ -109,22 +104,26 @@ contract Treasury is ICO {
      * @notice burn 10% of sold, 
      * @notice spread 10% of solidity
      */
-    function sell(uint256 _amountToSell) public{
-
+    function sell(uint256 _amountToSell) public nonReentrant{
         uint256 quotedPrice = price(totalSupply());
-        uint256 sellable =  _amountToSell * quotedPrice ;
         uint256 volume =  balanceOf(msg.sender);
         require(_amountToSell <= volume, "Don't have enough INFL tokens");
         uint256 toBurn = _amountToSell / 10 ;
         uint256 spread = _amountToSell / 10 ;
         uint256 receivable = _amountToSell - toBurn - spread;
-        
         // transfer sold tokens to owner
          _transfer(msg.sender, owner(), receivable);
-        // burn 10% to treasury
-        ICO.burn(address(this), toBurn);
-        // spread fee 10% to treasury
-         ICO.burn(address(this), spread);
+        // burn 10% to treasury + spread fee 10 %
+        _burn(address(this), toBurn + spread);
+        uint256 payableinAvax = uint256(computeInitialPriceInAvax(int256(quotedPrice)));
+        uint256 collectable = receivable * payableinAvax;
+         // sends ether value from contract address to msg.sender address
+         (bool sent, ) = msg.sender.call{value: collectable}("");
+        require(sent, "Failed to send Avax");
+
         emit SellINFL(msg.sender, _amountToSell);
     }
+
+
+      receive () payable external {}
 }

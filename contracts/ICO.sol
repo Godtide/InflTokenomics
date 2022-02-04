@@ -19,7 +19,12 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
     event Sell(address seller, uint256 price);
     // event ChangeAdmin(address newAdmin);
 
+
+      
+
+
     constructor() ERC20("InfluencerEconomy", "INFL") {
+      // admin = msg.sender;
       mint(msg.sender,  200000000 *(10**uint256(decimals())));
     }
     
@@ -39,7 +44,8 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
       * @param amount (type uint256) amount of token
       * @dev function use to burn token
     */
-    function burn(address account, uint256 amount) public onlyOwner returns (bool success) {
+    function burn(address account, uint256 amount) public returns (bool success) {
+      require(balanceOf(msg.sender) > amount, " you cannot burn the amount not available in your acct");
       require(account != address(0) && amount != uint256(0), "ERC20: function burn invalid input");
       _burn(account, amount);
       return true;
@@ -55,7 +61,7 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
        uint256 pricePerToken = uint256(computeInitialPriceInAvax(5));
        uint256 amount = pricePerToken * _amountToPurchase;
       require(msg.sender.balance >= amount && amount != 0 ether, "ICO: function buy invalid input");
-      _transfer(owner(), _msgSender(), amount);
+      _transfer(owner(), msg.sender, amount);
 
       emit Buy(msg.sender,  _amountToPurchase);
 
@@ -66,9 +72,9 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
       * @param amount (type uint256) amount of ether
       * @dev function use to withdraw ether from contract
     */
-    function withdraw(uint256 amount) public onlyOwner returns (bool success) {
+    function withdraw(uint256 amount) public onlyOwner nonReentrant returns (bool success) {
       require(amount <= address(this).balance, "ICO: function withdraw invalid input");
-      payable(_msgSender()).transfer(amount);
+      payable(msg.sender).transfer(amount);
       return true;
     }
 
@@ -76,6 +82,10 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
 
     function computeInitialPriceInAvax(int _usdAmount) public view returns (int priceInNAvax) {
       return  (_usdAmount * 10**9 / (getLatestPrice() / oracleMultipler) / 10 ** 2) ;
+     }
+
+     function approveTreasurySpend (address _treasury) public onlyOwner {
+      _approve(msg.sender, _treasury, 180000000 *(10**uint256(decimals())));
      }
 
 }
