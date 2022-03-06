@@ -23,7 +23,7 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
       
 
 
-    constructor() ERC20("InfluencerEconomy", "INFL") {
+    constructor() ERC20("InfluencerEconomy", "FLW") {
       // admin = msg.sender;
       mint(msg.sender,  200000000 *(10**uint256(decimals())));
     }
@@ -54,8 +54,8 @@ contract ICO is ERC20, Ownable, ReentrancyGuard,  PriceConsumerV3 {
     /** 
       * @dev function to buy token with ether
     */
-    function buy(uint256 _amountToPurchase) public payable virtual nonReentrant 
-    // returns (bool sucess) 
+    function buy(uint256 _amountToPurchase) internal payable virtual
+      // returns (bool sucess) 
     {
         // real pricePerToken = 5/ 10 ** 2
        uint256 pricePerToken = uint256(computeInitialPriceInAvax(5));
