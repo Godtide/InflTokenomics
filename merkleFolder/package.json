@@ -1,0 +1,15 @@
+{
+    "name": "merkle",
+    "version": "1.0.0",
+    "description": "folder to generate merkles",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "merkletreejs": "^0.2.30"
+    }
+}

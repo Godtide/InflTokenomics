@@ -1,11 +1,10 @@
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "./ICO.sol";
 
 contract PrivateSale is ICO {
-    bytes32 immutable public root = "02546ef9acfa532c0ad0b51e4a8d529ed8dafd0d67db261ee863d109822236b5";
+    // bytes32 immutable public root = "02546ef9acfa532c0ad0b51e4a8d529ed8dafd0d67db261ee863d109822236b5";
 
     constructor( bytes32 merkleroot)
     {
@@ -25,10 +24,10 @@ contract PrivateSale is ICO {
         require(_verify(_leaf(account, proof), "Invalid merkle proof");
     }
 
-    function _leaf(address account, uint256 tokenId)
+    function _leaf(address account)
     internal pure returns (bytes32)
     {
-        return keccak256(abi.encodePacked(tokenId, account));
+        return keccak256(abi.encodePacked(account));
     }
 
     function _verify(bytes32 leaf, bytes32[] memory proof)
