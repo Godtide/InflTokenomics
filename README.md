@@ -61,11 +61,3 @@ Inflow Network believes that each and every one of its influencers are one of a 
 Influencer gets $50,000 worth of tokens when they are able to provide $50,000 cost-worth of engagement models to the economy. One exclusive dinner with 10 fans, 100 story reshares, 1000 special birthday wishes may cost the influencer nothing but would be worth $50,000 to their fans.  
 
 $50,000 cost-worth equates to at least $500,000 value-worth of engagement in the INFLOW economy due to inherent supply/demand asymmetries, chance and auction mechanisms, and pricing inefficiencies. Influencer immediately receives 30% of such multiplier without risking the ire of the fans for price gouging given that the “abstracted” network shoulders the methods and modes of economy. For example, a dinner with one fan may actually cost $500 for the influencer and can be atomically priced at $5,000. But a $10 raffle for that dinner is price inelastic for any win-probability so the overall value can be realized at $50,000. At the onset, influencer turned $50,000 cost-worth to a $200,000 value-worth in tokens. With an estimated 100x appreciation in token value, joining the network with $50,000 worth of engagement can be a $20 million investment in a year or two.  
-
-
-
-### To do
-   
-     * @ todo ensure that the pricing is done in dollar to Eth equivalent
-    
-    function buy( uint256 _amountToPurchase) public payable override {}
